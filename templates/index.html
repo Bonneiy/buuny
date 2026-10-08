@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block c %}
+{% if g.user %}
+<h2>เขียนโพสต์ใหม่</h2>
+<form method="post" action="/post/new">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input name="title" placeholder="หัวข้อ" required maxlength="100">
+  <textarea name="body" rows="4" placeholder="เนื้อหา" required maxlength="2000"></textarea>
+  <button>โพสต์</button>
+</form>
+{% else %}<p>เข้าสู่ระบบเพื่อเขียนโพสต์</p>{% endif %}
+
+<h2>โพสต์ทั้งหมด</h2>
+{% for p in posts %}
+<article>
+  <h3>{{ p.title }}</h3>
+  <small>โดย {{ p.username }} · {{ p.created_at }}</small>
+  <p class="b">{{ p.body }}</p>
+  {% if g.user and g.user.id == p.user_id %}<a href="/post/{{ p.id }}/edit">แก้ไข</a>{% endif %}
+  {% if g.user and (g.user.id == p.user_id or g.user.role == 'admin') %}
+  <form class="i" method="post" action="/post/{{ p.id }}/delete" data-confirm="ลบโพสต์นี้?">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button>ลบ</button>
+  </form>
+  {% endif %}
+</article>
+{% else %}<p>ยังไม่มีโพสต์</p>{% endfor %}
+{% endblock %}

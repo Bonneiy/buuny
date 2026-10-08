@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block c %}
+<h2>จัดการผู้ใช้</h2>
+<table>
+  <tr><th>ผู้ใช้</th><th>บทบาท</th><th>โพสต์</th><th></th></tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.username }}</td><td>{{ u.role }}</td><td>{{ u.n }}</td>
+    <td>
+      {% if u.id != g.user.id %}
+      <form class="i" method="post" action="/admin/user/{{ u.id }}/role">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="role" value="{{ 'user' if u.role == 'admin' else 'admin' }}">
+        <button>เปลี่ยนเป็น {{ 'user' if u.role == 'admin' else 'admin' }}</button>
+      </form>
+      <form class="i" method="post" action="/admin/user/{{ u.id }}/delete" data-confirm="ลบผู้ใช้นี้และโพสต์ทั้งหมด?">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button>ลบ</button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>โพสต์ทั้งหมด</h2>
+{% for p in posts %}
+<article>
+  <b>{{ p.title }}</b> โดย {{ p.username }}
+  <form class="i" method="post" action="/post/{{ p.id }}/delete" data-confirm="ลบโพสต์นี้?">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="from" value="admin">
+    <button>ลบ</button>
+  </form>
+</article>
+{% endfor %}
+{% endblock %}

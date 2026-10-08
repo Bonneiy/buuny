@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mini Board</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+<nav>
+  <a href="/">หน้าแรก</a>
+  {% if g.user %}
+    {% if g.user.role == 'admin' %}<a href="/admin">Admin</a>{% endif %}
+    <form method="post" action="/logout">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      {{ g.user.username }} ({{ g.user.role }}) <button>ออกจากระบบ</button>
+    </form>
+  {% else %}
+    <a href="/login">เข้าสู่ระบบ</a><a href="/register">สมัครสมาชิก</a>
+  {% endif %}
+</nav>
+{% for m in get_flashed_messages() %}<p class="flash">{{ m }}</p>{% endfor %}
+{% block c %}{% endblock %}
+</body>
+</html>

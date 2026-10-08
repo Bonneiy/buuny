@@ -1,0 +1,7 @@
+body{font-family:system-ui,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem}
+nav{display:flex;gap:1rem;align-items:center;border-bottom:1px solid #ccc;padding-bottom:.5rem}
+nav form{display:inline;margin-left:auto}
+input,textarea{display:block;width:100%;padding:.5rem;margin:.3rem 0 .8rem;box-sizing:border-box}
+article{border:1px solid #ddd;border-radius:8px;padding:1rem;margin:1rem 0}
+.b{white-space:pre-wrap}.flash{background:#fff3cd;padding:.5rem 1rem;border-radius:6px}
+form.i{display:inline}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ddd;padding:.4rem}

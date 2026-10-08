@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block c %}
+<h2>{{ 'สมัครสมาชิก' if reg else 'เข้าสู่ระบบ' }}</h2>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>ชื่อผู้ใช้<input name="username" required maxlength="20"></label>
+  <label>รหัสผ่าน<input type="password" name="password" required minlength="8"></label>
+  {% if reg %}<label>ยืนยันรหัสผ่าน<input type="password" name="confirm" required></label>{% endif %}
+  <button>ตกลง</button>
+</form>
+{% endblock %}
